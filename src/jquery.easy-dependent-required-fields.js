@@ -37,7 +37,7 @@
 			
 				var $field = $(this),
 					$form = $field.closest('form'),
-					$observe = $( '[name=' + $field.data( DEPENDENCY + '-field' ) + ']', $form ),
+					$observe = $( '[name="' + $field.data( DEPENDENCY + '-field' ) + '"]', $form ),
 					trigger_value = $field.data( DEPENDENCY + '-value' ).toLowerCase(),
 					dependencies = $observe.data( DEPENDENCIES ) || [];
 				
