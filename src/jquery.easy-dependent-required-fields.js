@@ -17,7 +17,15 @@
  * 
  * When a field becomes required, its required attribute is set and its label is given
  * a * in the form of an abbreviation: <abbr title="required">*</abbr>. When the field is
- * un-required, the abbreviation and the required attribute are removed.
+ * un-required, the abbreviation and the required attribute are removed.\
+ * 
+ * If multiple values from the same field will trigger a field to be required, then use a comma
+ * separated list in the HTML, like so:
+ * 
+ * <label for="department">Department</label>
+ * 		<input type="email" id="department" name="department" 
+ * 				data-required-dependency-field="industry"
+ * 				data-required-dependency-value="Academia,Education"/>
  * 
  **/
 (function( $, $dependent_fields ){
@@ -38,7 +46,7 @@
 				var $field = $(this),
 					$form = $field.closest('form'),
 					$observe = $( '[name="' + $field.data( DEPENDENCY + '-field' ) + '"]', $form ),
-					trigger_value = $field.data( DEPENDENCY + '-value' ).toLowerCase(),
+					trigger_value = $field.data( DEPENDENCY + '-value' ).toLowerCase().split(','),
 					dependencies = $observe.data( DEPENDENCIES ) || [];
 				
 				$field.data( LABEL, $( LABEL + '[for=' + $field.attr('id') + ']', $form ) );
@@ -95,7 +103,7 @@
 				
 				// gonna use event triggering to allow us to maintain the code in one place
 				// this also makes it extensible
-				if ( $field.val().toLowerCase() == dependency.trigger_value )
+				if ( $.inArray($field.val().toLowerCase(), dependency.trigger_value ) !== -1)
 				{
 					dependency.$field.trigger( 'field.require' );
 				}
