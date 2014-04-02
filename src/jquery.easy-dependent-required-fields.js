@@ -94,30 +94,27 @@
 
 			 });
 		
-		$observing
-			.on( 'change keyup', function(){
+		$observing.on( 'change keyup', function(){
 
-				var $field = $(this),
-					dependencies = $field.data( DEPENDENCIES );
+			var $field = $(this),
+				dependencies = $field.data( DEPENDENCIES );
 			
-				$.each( dependencies, function( i, dependency ){
+			$.each( dependencies, function( i, dependency ){
 				
-					// gonna use event triggering to allow us to maintain the code in one place
-					// this also makes it extensible
-					if ( $.inArray($field.val().toLowerCase(), dependency.trigger_value ) !== -1)
-					{
-						dependency.$field.trigger( 'field.require' );
-					}
-					else
-					{
-						dependency.$field.trigger( 'field.un-require' );
-					}
+				// gonna use event triggering to allow us to maintain the code in one place
+				// this also makes it extensible
+				if ( $.inArray($field.val().toLowerCase(), dependency.trigger_value ) !== -1)
+				{
+					dependency.$field.trigger( 'field.require' );
+				}
+				else
+				{
+					dependency.$field.trigger( 'field.un-require' );
+				}
 				
-				});
+			});
 			
-			})
-			// starting positions
-			.triggerHandler('change');
+		});
 		
 	}
 	
